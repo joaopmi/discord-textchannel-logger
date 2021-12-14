@@ -31,8 +31,10 @@ class Logger {
                 this._logError(new text_channel_not_found_1.TextChannelNotFound("TEXT CHANNEL NOT FOUND"));
             else if (!(channel instanceof discord_js_1.TextChannel))
                 this._logError(new invalid_text_channel_1.InvalidTextChannel("NOT A TEXT CHANNEL"));
-            let textChannel = channel;
-            let msg = this._options.customHeader ? this._options.customHeader + '\n' : '';
+            const textChannel = channel;
+            let msgChannel = this._options.customHeader ? this._options.customHeader + '\n' : '';
+            let msgConsole = this._options.customHeaderConsole ? this._options.customHeaderConsole + '\n' : '';
+            msgConsole += this._options.printCurrentTimeConsole ? new Date().toLocaleString() + ' ' : '';
             let valueToPrint = value;
             if ('object' === typeof value) {
                 if (!(value instanceof Error)) {
@@ -43,10 +45,12 @@ class Logger {
                         valueToPrint += value.toString();
                     }
                 }
+                else
+                    valueToPrint += value.stack || value.toString();
             }
-            textChannel.send(msg + valueToPrint);
+            textChannel.send(msgChannel + valueToPrint);
             if (this._options.consoleLog)
-                console.log(msg, valueToPrint);
+                console.log(msgConsole, valueToPrint);
         })
             .catch((reason) => {
             this._logError(new text_channel_not_found_1.TextChannelNotFound(reason));

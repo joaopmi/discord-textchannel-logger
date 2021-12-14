@@ -28,20 +28,22 @@ export class Logger {
         CLIENT.channels.fetch(this._options.textChannelID).then((channel: Channel | null) => {
             if (!channel) this._logError(new TextChannelNotFound("TEXT CHANNEL NOT FOUND"));
             else if (!(channel instanceof TextChannel)) this._logError(new InvalidTextChannel("NOT A TEXT CHANNEL"));
-            let textChannel: TextChannel = channel as TextChannel;
-            let msg: string = this._options.customHeader ? this._options.customHeader + '\n' : '';
-            let valueToPrint:any = value;
-            if('object' === typeof value){
-                if(!(value instanceof Error)){
-                    try{
+            const textChannel: TextChannel = channel as TextChannel;
+            let msgChannel: string = this._options.customHeader ? this._options.customHeader + '\n' : '';
+            let msgConsole:string = this._options.customHeaderConsole ? this._options.customHeaderConsole + '\n' : '';
+            msgConsole += this._options.printCurrentTimeConsole ? new Date().toLocaleString() + ' ' : '';
+            let valueToPrint: any = value;
+            if ('object' === typeof value) {
+                if (!(value instanceof Error)) {
+                    try {
                         valueToPrint = JSON.stringify(value);
-                    }catch(e:any){
+                    } catch (e: any) {
                         valueToPrint += value.toString();
                     }
-                }
+                }else valueToPrint += value.stack || value.toString()
             }
-            textChannel.send(msg + valueToPrint);
-            if (this._options.consoleLog) console.log(msg, valueToPrint);
+            textChannel.send(msgChannel + valueToPrint);
+            if (this._options.consoleLog) console.log(msgConsole, valueToPrint);
         })
             .catch((reason: any) => {
                 this._logError(new TextChannelNotFound(reason));
@@ -53,7 +55,6 @@ export class Logger {
         console.log(error);
     }
 }
-
 export declare namespace Logger {
     interface InitOptions {
         /**boolean */
@@ -61,11 +62,21 @@ export declare namespace Logger {
          * If should print log on console
          */
         consoleLog?: boolean;
+        /**
+         * If should print the current time as toLocaleString() on console.
+         * If it exists, prints after the custom headers
+         * @example 14/12/2021 10:39:54 ==> 'message'
+         */
+        printCurrentTimeConsole?: boolean;
         /**string */
         textChannelID: string;
         /**
-         * Custom log header to print along with the logger instantiated with this option
+         * Custom log header to print along with the message
          */
         customHeader?: string;
+        /**
+         * Custom log header to print on console along with the message
+         */
+        customHeaderConsole?: string;
     }
 };
