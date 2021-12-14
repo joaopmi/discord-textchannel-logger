@@ -1,0 +1,28 @@
+{
+  "name": "discord-textchannel-logger",
+  "version": "1.0.7",
+  "description": "Simple logger for textChannels",
+  "main": "./src/app/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "/src/app/"
+  ],
+  "types": "./src/app/index.d.ts",
+  "keywords": [
+    "log",
+    "discord",
+    "discord-logger",
+    "console",
+    "print",
+    "text",
+    "text-channel",
+    "textchannel"
+  ],
+  "author": "João",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^13.3.1"
+  }
+}

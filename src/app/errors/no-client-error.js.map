@@ -1,0 +1,1 @@
+{"version":3,"file":"no-client-error.js","sourceRoot":"","sources":["../../app-ts/errors/no-client-error.ts"],"names":[],"mappings":";;;AAAA,MAAa,aAAc,SAAQ,KAAK;IAEpC,YAAY,OAAW;QACnB,IAAG,OAAO,IAAI,OAAO,OAAO,KAAK,QAAQ;YAAE,KAAK,CAAC,IAAI,CAAC,SAAS,CAAC,OAAO,CAAC,CAAC,CAAC;;YACrE,KAAK,CAAC,OAAO,CAAC,CAAC;IACxB,CAAC;CAEJ;AAPD,sCAOC"}
