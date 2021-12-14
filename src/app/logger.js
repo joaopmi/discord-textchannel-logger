@@ -33,21 +33,16 @@ class Logger {
                 this._logError(new invalid_text_channel_1.InvalidTextChannel("NOT A TEXT CHANNEL"));
             let textChannel = channel;
             let msg = this._options.customHeader ? this._options.customHeader + '\n' : '';
-            if ('object' === typeof value) {
-                msg += JSON.stringify(value);
-            }
-            else
-                msg += value;
-            textChannel.send(msg);
+            textChannel.send(msg + value);
             if (this._options.consoleLog)
-                console.log(msg);
+                console.log(msg, value);
         })
             .catch((reason) => {
             this._logError(new text_channel_not_found_1.TextChannelNotFound(reason));
         });
     }
     _logError(error) {
-        error.message += ` |||| TextChannel -> ${this._options?.textChannelID}`;
+        error.message += ` |||| TextChannel -> ${this._options.textChannelID}`;
         console.log(error);
     }
 }

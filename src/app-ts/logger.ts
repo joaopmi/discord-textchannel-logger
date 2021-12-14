@@ -30,11 +30,8 @@ export class Logger {
             else if (!(channel instanceof TextChannel)) this._logError(new InvalidTextChannel("NOT A TEXT CHANNEL"));
             let textChannel: TextChannel = channel as TextChannel;
             let msg: string = this._options.customHeader ? this._options.customHeader + '\n' : '';
-            if ('object' === typeof value) {
-                msg += JSON.stringify(value);
-            } else msg += value;
-            textChannel.send(msg);
-            if (this._options.consoleLog) console.log(msg);
+            textChannel.send(msg + value);
+            if (this._options.consoleLog) console.log(msg, value);
         })
             .catch((reason: any) => {
                 this._logError(new TextChannelNotFound(reason));
