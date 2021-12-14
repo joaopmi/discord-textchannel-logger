@@ -36,7 +36,7 @@ export class Logger {
             if ('object' === typeof value) {
                 if (!(value instanceof Error)) {
                     try {
-                        valueToPrint = JSON.stringify(value);
+                        valueToPrint = JSON.stringify(value,null,2);
                     } catch (e: any) {
                         valueToPrint += value.toString();
                     }
