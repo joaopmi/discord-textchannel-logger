@@ -33,9 +33,20 @@ class Logger {
                 this._logError(new invalid_text_channel_1.InvalidTextChannel("NOT A TEXT CHANNEL"));
             let textChannel = channel;
             let msg = this._options.customHeader ? this._options.customHeader + '\n' : '';
-            textChannel.send(msg + value);
+            let valueToPrint = value;
+            if ('object' === typeof value) {
+                if (!(value instanceof Error)) {
+                    try {
+                        valueToPrint = JSON.stringify(value);
+                    }
+                    catch (e) {
+                        valueToPrint += value.toString();
+                    }
+                }
+            }
+            textChannel.send(msg + valueToPrint);
             if (this._options.consoleLog)
-                console.log(msg, value);
+                console.log(msg, valueToPrint);
         })
             .catch((reason) => {
             this._logError(new text_channel_not_found_1.TextChannelNotFound(reason));
