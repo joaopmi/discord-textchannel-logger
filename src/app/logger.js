@@ -34,7 +34,7 @@ class Logger {
             const textChannel = channel;
             let msgChannel = this._options.customHeader ? this._options.customHeader + '\n' : '';
             let msgConsole = this._options.customHeaderConsole ? this._options.customHeaderConsole + '\n' : '';
-            msgConsole += this._options.printCurrentTimeConsole ? new Date().toLocaleString() + ' ' : '';
+            msgConsole += this._options.printCurrentTimeConsole ? new Date().toLocaleString() + ' ==> ' : '';
             let valueToPrint = value;
             if ('object' === typeof value) {
                 if (!(value instanceof Error)) {

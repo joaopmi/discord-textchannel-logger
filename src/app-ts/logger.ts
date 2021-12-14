@@ -31,7 +31,7 @@ export class Logger {
             const textChannel: TextChannel = channel as TextChannel;
             let msgChannel: string = this._options.customHeader ? this._options.customHeader + '\n' : '';
             let msgConsole:string = this._options.customHeaderConsole ? this._options.customHeaderConsole + '\n' : '';
-            msgConsole += this._options.printCurrentTimeConsole ? new Date().toLocaleString() + ' ' : '';
+            msgConsole += this._options.printCurrentTimeConsole ? new Date().toLocaleString() + ' ==> ' : '';
             let valueToPrint: any = value;
             if ('object' === typeof value) {
                 if (!(value instanceof Error)) {
