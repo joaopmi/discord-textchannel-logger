@@ -53,7 +53,7 @@ discord.js: ^13.3.1
 
 - Class ```Logger``` - Used to send messages to textChannels and console. Needs ```InitOptions``` in constructor, if it's an invalid value, it'll throw an ```TextChannelNotFound```.
 
-- - Function log(value:any):void - Send ```value``` (if not ```undefined```) to configured textChannel in ```InitOptions``` and print on ```console```, in case is configured to, in ```InitOptions```. If ```value``` it's a typeof ```object```, it'll try to ```JSON.stringify``` it, unless, if it's an ```Error``` instance, it'll print its stack trace. In case of ```JSON.stringify``` failure it'll use the ```object.toString```.
+- - Function ```log(value:any):void``` - Send ```value``` (if not ```undefined```) to configured textChannel in ```InitOptions``` and print on ```console```, in case is configured to, in ```InitOptions```. If ```value``` it's a typeof ```object```, it'll try to ```JSON.stringify``` it, unless, if it's an ```Error``` instance, it'll print its stack trace. In case of ```JSON.stringify``` failure it'll use the ```object.toString```.
 
 - Options ```Logger.InitOptions``` - 
 - - ```console.log?:boolean``` - If should print the value on console
