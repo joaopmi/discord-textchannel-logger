@@ -21,6 +21,10 @@
     "textchannel"
   ],
   "author": "João",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joaopmi/discord-textchannel-logger"
+  },
   "license": "ISC",
   "dependencies": {
     "discord.js": "^13.3.1"
