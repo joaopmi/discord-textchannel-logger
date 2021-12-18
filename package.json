@@ -27,6 +27,7 @@
   },
   "license": "ISC",
   "dependencies": {
+    "circular-reference-remover": "^1.0.5",
     "discord.js": "^13.3.1"
   }
 }

@@ -1,10 +1,14 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Logger = exports.initLogger = void 0;
 const discord_js_1 = require("discord.js");
 const invalid_text_channel_1 = require("./errors/invalid-text-channel");
 const no_client_error_1 = require("./errors/no-client-error");
 const text_channel_not_found_1 = require("./errors/text-channel-not-found");
+const circular_reference_remover_1 = __importDefault(require("circular-reference-remover"));
 let CLIENT;
 function initLogger(client) {
     CLIENT = client;
@@ -26,7 +30,7 @@ class Logger {
             this._logError(new text_channel_not_found_1.TextChannelNotFound("TEXT CHANNEL INVALID/NOT INFORMED"));
         if (value === undefined)
             return;
-        CLIENT.channels.fetch(this._options.textChannelID).then((channel) => {
+        CLIENT.channels.fetch(this._options.textChannelID).then(async (channel) => {
             if (!channel)
                 this._logError(new text_channel_not_found_1.TextChannelNotFound("TEXT CHANNEL NOT FOUND"));
             else if (!(channel instanceof discord_js_1.TextChannel))
@@ -37,14 +41,8 @@ class Logger {
             msgConsole += this._options.printCurrentTimeConsole ? new Date().toLocaleString() + ' ==> ' : '';
             let valueToPrint = value;
             if ('object' === typeof value) {
-                if (!(value instanceof Error)) {
-                    try {
-                        valueToPrint = JSON.stringify(value, null, 2);
-                    }
-                    catch (e) {
-                        valueToPrint += value.toString();
-                    }
-                }
+                if (!(value instanceof Error))
+                    valueToPrint = await this._tryStringify(value).catch(() => value.toString());
                 else
                     valueToPrint += value.stack || value.toString();
             }
@@ -54,6 +52,11 @@ class Logger {
         })
             .catch((reason) => {
             this._logError(new text_channel_not_found_1.TextChannelNotFound(reason));
+        });
+    }
+    async _tryStringify(value) {
+        return new Promise((res) => {
+            res(JSON.stringify((0, circular_reference_remover_1.default)(value), null, this._options.jsonSpace || 2));
         });
     }
     _logError(error) {

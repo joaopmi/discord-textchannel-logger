@@ -2,10 +2,11 @@ import { Channel, Client, TextChannel } from "discord.js";
 import { InvalidTextChannel } from "./errors/invalid-text-channel";
 import { NoClientError } from "./errors/no-client-error";
 import { TextChannelNotFound } from "./errors/text-channel-not-found";
+import remover from 'circular-reference-remover';
 
 let CLIENT: Client;
 
-export function initLogger(client: Client):void {
+export function initLogger(client: Client): void {
     CLIENT = client;
 }
 
@@ -25,22 +26,17 @@ export class Logger {
         if (!CLIENT) console.log(new NoClientError("CLIENT NOT CONNECTED"));
         if (!this._options || !this._options.textChannelID) this._logError(new TextChannelNotFound("TEXT CHANNEL INVALID/NOT INFORMED"));
         if (value === undefined) return;
-        CLIENT.channels.fetch(this._options.textChannelID).then((channel: Channel | null) => {
+        CLIENT.channels.fetch(this._options.textChannelID).then(async (channel: Channel | null) => {
             if (!channel) this._logError(new TextChannelNotFound("TEXT CHANNEL NOT FOUND"));
             else if (!(channel instanceof TextChannel)) this._logError(new InvalidTextChannel("NOT A TEXT CHANNEL"));
             const textChannel: TextChannel = channel as TextChannel;
             let msgChannel: string = this._options.customHeader ? this._options.customHeader + '\n' : '';
-            let msgConsole:string = this._options.customHeaderConsole ? this._options.customHeaderConsole + '\n' : '';
+            let msgConsole: string = this._options.customHeaderConsole ? this._options.customHeaderConsole + '\n' : '';
             msgConsole += this._options.printCurrentTimeConsole ? new Date().toLocaleString() + ' ==> ' : '';
             let valueToPrint: any = value;
             if ('object' === typeof value) {
-                if (!(value instanceof Error)) {
-                    try {
-                        valueToPrint = JSON.stringify(value,null,2);
-                    } catch (e: any) {
-                        valueToPrint += value.toString();
-                    }
-                }else valueToPrint += value.stack || value.toString()
+                if (!(value instanceof Error)) valueToPrint = await this._tryStringify(value).catch(() => value.toString());
+                else valueToPrint += value.stack || value.toString();
             }
             textChannel.send(msgChannel + valueToPrint);
             if (this._options.consoleLog) console.log(msgConsole, valueToPrint);
@@ -48,6 +44,20 @@ export class Logger {
             .catch((reason: any) => {
                 this._logError(new TextChannelNotFound(reason));
             });
+    }
+
+    private async _tryStringify(value: any): Promise<string> {
+        return new Promise<string>(
+            (
+                res: (value: string | PromiseLike<string>) => void
+            ) => {
+                res(
+                    JSON.stringify(
+                        remover(value), null, this._options.jsonSpace || 2
+                    )
+                );
+            }
+        );
     }
 
     private _logError<E extends Error>(error: E): void {
@@ -68,6 +78,11 @@ export declare namespace Logger {
          * @example 'customHeaderIfExists\n' + 14/12/2021 10:39:54 ==> 'message'
          */
         printCurrentTimeConsole?: boolean;
+        /**number */
+        /**The space indent of JSON.stringify
+         * @default 2
+         */
+        jsonSpace: number;
         /**string */
         /**(Obligatory) ID of the textChannel to print on */
         textChannelID: string;
