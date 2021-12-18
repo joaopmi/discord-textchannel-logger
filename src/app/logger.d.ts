@@ -28,7 +28,7 @@ export declare namespace Logger {
         /**The space indent of JSON.stringify
          * @default 2
          */
-        jsonSpace: number;
+        jsonSpace?: number;
         /**string */
         /**(Obligatory) ID of the textChannel to print on */
         textChannelID: string;
