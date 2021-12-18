@@ -60,7 +60,7 @@ circular-reference-remover: ^1.0.5
 - - ```console.log?:boolean``` - If true print the value on console
 - - ```printCurrentTimeConsole?:boolean``` - If true print the current time as ```toLocaleString``` on console. If it's true, prints after the custom headers. Example: 
 ```'customHeaderIfExists\n' + 14/12/2021 10:39:54 ==> 'message'```
-- - ```jsonSpace``` - The space indent of JSON.stringify in ```log```. ```Default: 2```
+- - ```jsonSpace?:number``` - The space indent of JSON.stringify in ```log```. ```Default: 2```
 
 - - ```textChannelID:string``` - (Obligatory) ID of the textChannel to print on.
 - - ```customHeader?:string``` - Custom log header to print along before the message
