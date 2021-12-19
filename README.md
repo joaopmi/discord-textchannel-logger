@@ -2,13 +2,13 @@
 Simple logger for textChannels.
 
 
-- [GITHUB](https://github.com/joaopmi/circular-reference-remover) 
-- [NPM](https://www.npmjs.com/package/circular-reference-remover)
+- [GITHUB](https://github.com/joaopmi/discord-textchannel-logger) 
+- [NPM](https://www.npmjs.com/package/discord-textchannel-logger)
 
 # Installation
 
 ```
-npm i circular-reference-remover
+npm i discord-textchannel-logger
 ```
 
 ## Usage
