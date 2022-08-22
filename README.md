@@ -44,7 +44,7 @@ export {loggerOne,loggerTwo};
 
 # Dependencies Used
 ```json
-discord.js: ^13.3.1
+discord.js: ^14.2.0
 circular-reference-remover: ^1.0.5
 ```
 
