@@ -2,7 +2,7 @@ import { Channel, Client, TextChannel } from "discord.js";
 import { InvalidTextChannel } from "./errors/invalid-text-channel";
 import { NoClientError } from "./errors/no-client-error";
 import { TextChannelNotFound } from "./errors/text-channel-not-found";
-import remover from 'circular-reference-remover';
+import {remove as remover} from 'circular-reference-remover';
 
 let CLIENT: Client;
 
