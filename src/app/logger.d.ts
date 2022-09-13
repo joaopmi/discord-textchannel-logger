@@ -8,6 +8,10 @@ export declare class Logger {
      * @param value Value to print on textChannel/console. Ignored if undefined
      */
     log(value: any): void;
+    /**
+     * @param value Value to print on textChannel/console. Ignored if undefined
+     */
+    trace(value: any): void;
     private _tryStringify;
     private _logError;
 }

@@ -1,6 +1,6 @@
 {
   "name": "discord-textchannel-logger",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "Simple logger for textChannels",
   "main": "./src/app/index.js",
   "scripts": {
