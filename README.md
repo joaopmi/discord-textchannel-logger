@@ -1,9 +1,7 @@
 # Info
 Simple logger for textChannels.
 
-
-- [GITHUB](https://github.com/joaopmi/discord-textchannel-logger) 
-- [NPM](https://www.npmjs.com/package/discord-textchannel-logger)
+See [NPM](https://www.npmjs.com/package/discord-textchannel-logger)
 
 # Installation
 
@@ -55,9 +53,10 @@ circular-reference-remover: ^1.0.5
 - Class ```Logger``` - Class to send messages to textChannels and console. Needs ```InitOptions``` on constructor, if it's an invalid value, it'll throw a ```TextChannelNotFound```.
 
 - - Function ```log(value:any):void``` - Send ```value``` (if not ```undefined```) to configured textChannel on ```InitOptions``` and print on ```console``` (if configured on ```InitOptions```). If ```value``` it's a typeof ```object```, it'll try to ```JSON.stringify``` it, unless, if it's an ```Error``` instance, it'll print its stack trace. In case of ```JSON.stringify``` failure it'll use the ```object.toString```.
+- - Function ```trace(value:any):void``` - Send ```value``` (if not ```undefined```) to configured textChannel on ```InitOptions``` and print on ```console``` with ```console.trace``` (if configured on ```InitOptions```). It'll do the same value conversion on ```log``` to send to ```TextChannel```, except it'll trace the raw value — passed to this function — on ```console```.
 
 - Options ```Logger.InitOptions``` - 
-- - ```console.log?:boolean``` - If true print the value on console
+- - ```console.log?:boolean``` - If true print the value on console. Valid for both ```log``` and ```trace```
 - - ```printCurrentTimeConsole?:boolean``` - If true print the current time as ```toLocaleString``` on console. If it's true, prints after the custom headers. Example: 
 ```'customHeaderIfExists\n' + 14/12/2021 10:39:54 ==> 'message'```
 - - ```jsonSpace?:number``` - The space indent of JSON.stringify on ```log```. ```Default: 2```
